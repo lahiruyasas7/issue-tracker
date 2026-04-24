@@ -6,9 +6,7 @@ import {
   refresh,
   register,
 } from "../controllers/auth.controller";
-import { protect } from "../middlerware/auth.middleware";
-
-console.log("Inside auth.routes.ts - Registering routes");
+import { protect } from "../middleware/auth.middleware";
 
 const router = Router();
 
