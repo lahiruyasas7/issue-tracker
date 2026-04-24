@@ -4,10 +4,13 @@ import { clearTokenCookies, setTokenCookies } from "../utils/token.util";
 import { prisma } from "../client";
 import { JwtPayload } from "../types/auth.type";
 import jwt from "jsonwebtoken";
+import { registerSchema } from "../validation-schemas/auth.schema";
+import { ZodError } from "zod";
 
 export const register = async (req: Request, res: Response): Promise<void> => {
   try {
-    const user = await registerUser(req.body);
+    const parsed = registerSchema.parse(req.body);
+    const user = await registerUser(parsed);
     const payload: JwtPayload = { userId: user.id, email: user.email };
 
     setTokenCookies(res, payload);
@@ -18,6 +21,16 @@ export const register = async (req: Request, res: Response): Promise<void> => {
       user,
     });
   } catch (err: any) {
+    if (err instanceof ZodError) {
+      res.status(400).json({
+        success: false,
+        errors: err.issues.map((issue) => ({
+          field: issue.path.join("."),
+          message: issue.message,
+        })),
+      });
+      return;
+    }
     res.status(400).json({ success: false, message: err.message });
   }
 };
