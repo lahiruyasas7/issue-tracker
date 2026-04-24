@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
-import { JwtPayload, LoginBody } from "../types/auth.type";
+import { JwtPayload } from "../types/auth.type";
 import { prisma } from "../client";
-import { RegisterBody } from "../validation-schemas/auth.schema";
+import { LoginBody, RegisterBody } from "../validation-schemas/auth.schema";
 
 export const registerUser = async (body: RegisterBody) => {
   if (!body.name || !body.email || !body.password) {
