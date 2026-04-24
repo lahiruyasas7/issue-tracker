@@ -4,10 +4,13 @@ import { clearTokenCookies, setTokenCookies } from "../utils/token.util";
 import { prisma } from "../client";
 import { JwtPayload } from "../types/auth.type";
 import jwt from "jsonwebtoken";
+import { loginSchema, registerSchema } from "../validation-schemas/auth.schema";
+import { ZodError } from "zod";
 
 export const register = async (req: Request, res: Response): Promise<void> => {
   try {
-    const user = await registerUser(req.body);
+    const parsed = registerSchema.parse(req.body);
+    const user = await registerUser(parsed);
     const payload: JwtPayload = { userId: user.id, email: user.email };
 
     setTokenCookies(res, payload);
@@ -18,13 +21,24 @@ export const register = async (req: Request, res: Response): Promise<void> => {
       user,
     });
   } catch (err: any) {
+    if (err instanceof ZodError) {
+      res.status(400).json({
+        success: false,
+        errors: err.issues.map((issue) => ({
+          field: issue.path.join("."),
+          message: issue.message,
+        })),
+      });
+      return;
+    }
     res.status(400).json({ success: false, message: err.message });
   }
 };
 
 export const login = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { payload, user } = await loginUser(req.body);
+    const parsed = loginSchema.parse(req.body);
+    const { payload, user } = await loginUser(parsed);
 
     setTokenCookies(res, payload);
 
@@ -33,7 +47,18 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       message: "Login successful",
       user,
     });
+    console.log("adada");
   } catch (err: any) {
+    if (err instanceof ZodError) {
+      res.status(400).json({
+        success: false,
+        errors: err.issues.map((issue) => ({
+          field: issue.path.join("."),
+          message: issue.message,
+        })),
+      });
+      return;
+    }
     res.status(401).json({ success: false, message: err.message });
   }
 };

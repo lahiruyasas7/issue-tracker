@@ -1,8 +1,12 @@
 import bcrypt from "bcryptjs";
-import { JwtPayload, LoginBody, RegisterBody } from "../types/auth.type";
+import { JwtPayload } from "../types/auth.type";
 import { prisma } from "../client";
+import { LoginBody, RegisterBody } from "../validation-schemas/auth.schema";
 
 export const registerUser = async (body: RegisterBody) => {
+  if (!body.name || !body.email || !body.password) {
+    throw new Error("Missing required fields: name, email, password");
+  }
   const { name, email, password } = body;
 
   const existing = await prisma.user.findUnique({ where: { email } });
