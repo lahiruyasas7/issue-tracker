@@ -1,7 +1,15 @@
 import { Router } from "express";
-import { createIssueHandler } from "../controllers/issue.controller";
+import {
+  createIssueHandler,
+  updateIssueHandler,
+  updateIssueStatusHandler,
+} from "../controllers/issue.controller";
 import { protect } from "../middleware/auth.middleware";
-import { createIssueSchema } from "../validation-schemas/issue.schema";
+import {
+  createIssueSchema,
+  updateIssueSchema,
+  updateIssueStatusSchema,
+} from "../validation-schemas/issue.schema";
 import { validate } from "../middleware/validate.middleware";
 
 const router = Router();
@@ -10,5 +18,11 @@ const router = Router();
 router.use(protect);
 
 router.post("/create", validate(createIssueSchema), createIssueHandler);
+router.patch("/update/:id", validate(updateIssueSchema), updateIssueHandler);
+router.patch(
+  "/update/:id/status",
+  validate(updateIssueStatusSchema),
+  updateIssueStatusHandler,
+);
 
 export default router;
