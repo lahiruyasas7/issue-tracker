@@ -34,8 +34,6 @@ export const updateIssueSchema = z
 
     priority: z.enum(["LOW", "MEDIUM", "HIGH", "CRITICAL"]).optional(),
 
-    severity: z.enum(["MINOR", "MAJOR", "CRITICAL"]).nullable().optional(),
-
     assignedToId: z.coerce
       .number() // handles string → number
       .int()
@@ -66,6 +64,53 @@ export const updateIssueStatusSchema = z
       path: ["confirmation"],
     },
   );
+
+export const getIssuesQuerySchema = z.object({
+  // pagination
+  page: z
+    .string()
+    .optional()
+    .default("1")
+    .transform((val) => parseInt(val))
+    .refine((val) => val > 0, { message: "Page must be a positive number" }),
+
+  limit: z
+    .string()
+    .optional()
+    .default("10")
+    .transform((val) => parseInt(val))
+    .refine((val) => val > 0 && val <= 100, {
+      message: "Limit must be between 1 and 100",
+    }),
+
+  // filters
+  status: z.enum(["OPEN", "IN_PROGRESS", "RESOLVED", "CLOSED"]).optional(),
+
+  priority: z.enum(["LOW", "MEDIUM", "HIGH", "CRITICAL"]).optional(),
+
+  // search
+  search: z
+    .string()
+    .trim()
+    .max(100, "Search term must not exceed 100 characters")
+    .optional(),
+
+  // sorting
+  sortBy: z
+    .enum(["createdAt", "updatedAt", "priority", "status"])
+    .optional()
+    .default("createdAt"),
+
+  sortOrder: z.enum(["asc", "desc"]).optional().default("desc"),
+
+  // filter by assignee
+  assignedToMe: z
+    .enum(["true", "false"])
+    .optional()
+    .transform((val) => val === "true"),
+});
+
+export type GetIssuesQuery = z.infer<typeof getIssuesQuerySchema>;
 
 export type UpdateIssueInput = z.infer<typeof updateIssueSchema>;
 export type UpdateIssueStatusInput = z.infer<typeof updateIssueStatusSchema>;
