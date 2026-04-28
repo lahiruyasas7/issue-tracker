@@ -1,12 +1,15 @@
 import { Router } from "express";
 import {
   createIssueHandler,
+  getIssueByIdHandler,
+  getIssuesHandler,
   updateIssueHandler,
   updateIssueStatusHandler,
 } from "../controllers/issue.controller";
 import { protect } from "../middleware/auth.middleware";
 import {
   createIssueSchema,
+  getIssuesQuerySchema,
   updateIssueSchema,
   updateIssueStatusSchema,
 } from "../validation-schemas/issue.schema";
@@ -24,5 +27,7 @@ router.patch(
   validate(updateIssueStatusSchema),
   updateIssueStatusHandler,
 );
+router.get("/", validate(getIssuesQuerySchema, "query"), getIssuesHandler);
+router.get("/:id", getIssueByIdHandler);
 
 export default router;
