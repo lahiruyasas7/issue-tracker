@@ -285,3 +285,16 @@ export const getIssueById = async (issueId: number) => {
 
   return issue;
 };
+
+//delete issue service
+export const deleteIssue = async (
+  issueId: number,
+  userId: number
+): Promise<void> => {
+  // reuses existing helper — checks existence + ownership in one query
+  await getIssueOwnedByUser(issueId, userId)
+
+  await prisma.issue.delete({
+    where: { id: issueId },
+  })
+}

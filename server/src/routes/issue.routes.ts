@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   createIssueHandler,
+  deleteIssueHandler,
   getIssueByIdHandler,
   getIssuesHandler,
   updateIssueHandler,
@@ -29,5 +30,6 @@ router.patch(
 );
 router.get("/", validate(getIssuesQuerySchema, "query"), getIssuesHandler);
 router.get("/:id", getIssueByIdHandler);
+router.delete("/:id", deleteIssueHandler);
 
 export default router;

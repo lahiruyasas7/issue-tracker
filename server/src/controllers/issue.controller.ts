@@ -2,6 +2,7 @@ import { Response } from "express";
 import { AuthRequest } from "../middleware/auth.middleware";
 import {
   createIssue,
+  deleteIssue,
   getIssueById,
   getIssues,
   updateIssue,
@@ -174,6 +175,32 @@ export const getIssueByIdHandler = async (
       success: true,
       data: issue,
     });
+  } catch (err: any) {
+    handleIssueError(err, res);
+  }
+};
+
+export const deleteIssueHandler = async (
+  req: AuthRequest,
+  res: Response,
+): Promise<void> => {
+  try {
+    const { id } = req.params;
+    if (!id || isNaN(Number(id))) {
+      res.status(400).json({ success: false, message: "Invalid issue ID" });
+      return;
+    }
+
+    const issueId = Number(id);
+
+    if (isNaN(issueId)) {
+      res.status(400).json({ success: false, message: "Invalid issue ID" });
+      return;
+    }
+
+    await deleteIssue(issueId, req.user!.userId);
+
+    res.status(204).send();
   } catch (err: any) {
     handleIssueError(err, res);
   }
