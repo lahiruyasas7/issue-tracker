@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.routes";
+import issueRoutes from "./routes/issue.routes";
 import { errorHandler } from "./middleware/error.middleware";
 import path from "path";
 
@@ -21,6 +22,7 @@ app.get("/health", (req, res) => {
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/issues", issueRoutes);
 
 // Error handler
 app.use(errorHandler);
