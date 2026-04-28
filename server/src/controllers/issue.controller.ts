@@ -2,9 +2,12 @@ import { Response } from "express";
 import { AuthRequest } from "../middleware/auth.middleware";
 import {
   createIssue,
+  getIssueById,
+  getIssues,
   updateIssue,
   updateIssueStatus,
 } from "../Services/issue.service";
+import { GetIssuesQuery } from "../validation-schemas/issue.schema";
 
 export const createIssueHandler = async (
   req: AuthRequest,
@@ -126,4 +129,52 @@ const handleIssueError = (err: any, res: Response): void => {
   }
 
   res.status(500).json({ success: false, message: "Internal server error" });
+};
+
+export const getIssuesHandler = async (
+  req: AuthRequest,
+  res: Response,
+): Promise<void> => {
+  try {
+    const query = (req as any).validated.query as GetIssuesQuery;
+    const result = await getIssues(query, req.user!.userId);
+
+    res.status(200).json({
+      success: true,
+      data: result.issues,
+      pagination: result.pagination,
+      statusCounts: result.statusCounts,
+    });
+  } catch (err: any) {
+    handleIssueError(err, res);
+  }
+};
+
+export const getIssueByIdHandler = async (
+  req: AuthRequest,
+  res: Response,
+): Promise<void> => {
+  try {
+    const { id } = req.params;
+    if (!id || isNaN(Number(id))) {
+      res.status(400).json({ success: false, message: "Invalid issue ID" });
+      return;
+    }
+
+    const issueId = Number(id);
+
+    if (isNaN(issueId)) {
+      res.status(400).json({ success: false, message: "Invalid issue ID" });
+      return;
+    }
+
+    const issue = await getIssueById(issueId);
+
+    res.status(200).json({
+      success: true,
+      data: issue,
+    });
+  } catch (err: any) {
+    handleIssueError(err, res);
+  }
 };
