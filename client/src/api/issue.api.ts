@@ -19,7 +19,7 @@ export const issueService = {
   },
 
   create: async (payload: unknown) => {
-    const { data } = await api.post('/issues', payload);
+    const { data } = await api.post('/issues/create', payload);
     return data;
   },
 
