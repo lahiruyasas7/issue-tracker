@@ -1,4 +1,8 @@
-import type { AuthResponse, LoginPayload, SignupPayload } from '../types/auth.types';
+import type {
+  AuthResponse,
+  LoginPayload,
+  SignupPayload,
+} from '../types/auth.types';
 import { api } from './axios';
 
 export const loginApi = async (data: LoginPayload): Promise<AuthResponse> => {

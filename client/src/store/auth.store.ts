@@ -1,5 +1,5 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 type User = {
   id: string;
@@ -39,7 +39,7 @@ export const useAuthStore = create<AuthState>()(
       setHydrated: () => set({ isHydrated: true }),
     }),
     {
-      name: "mo-auth",
+      name: 'mo-auth',
       // Only persist non-sensitive user metadata — NOT tokens.
       // Tokens live in httpOnly cookies managed by the server.
       partialize: (state) => ({

@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { useLogin } from "../hooks/auth/useLogin";
-import { useForm } from "react-hook-form";
-import { useRegister } from "../hooks/auth/useRegister";
+import { useState } from 'react';
+import { useLogin } from '../hooks/auth/useLogin';
+import { useForm } from 'react-hook-form';
+import { useRegister } from '../hooks/auth/useRegister';
 
-import { Input } from "@/components/ui/input";
+import { Input } from '@/components/ui/input';
 //import { Button } from "@/components/ui/button";
 import {
   ArrowRight,
@@ -13,10 +13,15 @@ import {
   Lock,
   Mail,
   User,
-} from "lucide-react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema, signupSchema, type LoginFormValues, type SignupFormValues } from "@/validations-schema/auth.schema";
-import { Button } from "@/components/ui/button";
+} from 'lucide-react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  loginSchema,
+  signupSchema,
+  type LoginFormValues,
+  type SignupFormValues,
+} from '@/validations-schema/auth.schema';
+import { Button } from '@/components/ui/button';
 
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
@@ -59,12 +64,12 @@ export default function AuthPage() {
             <span className="text-lg font-semibold">Issue Tracker</span>
           </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            {isLogin ? "Welcome Back" : "Create Account"}
+            {isLogin ? 'Welcome Back' : 'Create Account'}
           </h1>
           <p className="text-gray-600">
             {isLogin
-              ? "Sign in to access your account"
-              : "Join us to start shopping"}
+              ? 'Sign in to access your account'
+              : 'Join us to start shopping'}
           </p>
         </div>
         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
@@ -78,7 +83,7 @@ export default function AuthPage() {
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                   <Input
-                    {...register("full_name")}
+                    {...register('full_name')}
                     placeholder="John Doe"
                     className="pl-10"
                   />
@@ -97,7 +102,7 @@ export default function AuthPage() {
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <Input
-                  {...register("email")}
+                  {...register('email')}
                   type="email"
                   placeholder="you@example.com"
                   className="pl-10"
@@ -116,8 +121,8 @@ export default function AuthPage() {
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <Input
-                  {...register("password")}
-                  type={showPassword ? "text" : "password"}
+                  {...register('password')}
+                  type={showPassword ? 'text' : 'password'}
                   placeholder="••••••••"
                   className="pl-10 pr-10"
                   autoComplete="off"
@@ -144,8 +149,8 @@ export default function AuthPage() {
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                   <Input
-                    {...register("confirmPassword")}
-                    type={showPassword ? "text" : "password"}
+                    {...register('confirmPassword')}
+                    type={showPassword ? 'text' : 'password'}
                     placeholder="••••••••"
                     className="pl-10"
                   />
@@ -165,11 +170,11 @@ export default function AuthPage() {
               {loading ? (
                 <>
                   <Loader2 className="mr-2 w-4 h-4 animate-spin" />
-                  {isLogin ? "Signing in..." : "Creating account..."}
+                  {isLogin ? 'Signing in...' : 'Creating account...'}
                 </>
               ) : (
                 <>
-                  {isLogin ? "Sign In" : "Create Account"}
+                  {isLogin ? 'Sign In' : 'Create Account'}
                   <ArrowRight className="ml-2 w-4 h-4" />
                 </>
               )}
@@ -180,12 +185,12 @@ export default function AuthPage() {
             <p className="text-sm text-gray-600">
               {isLogin
                 ? "Don't have an account? "
-                : "Already have an account? "}
+                : 'Already have an account? '}
               <button
                 onClick={() => setIsLogin(!isLogin)}
                 className="text-black font-medium cursor-pointer"
               >
-                {isLogin ? "Sign up" : "Sign in"}
+                {isLogin ? 'Sign up' : 'Sign in'}
               </button>
             </p>
           </div>

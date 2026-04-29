@@ -1,8 +1,8 @@
-import { useMutation } from "@tanstack/react-query";
-import { useAuthStore } from "../../store/auth.store";
-import { loginApi } from "../../api/auth.api";
-import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
+import { useMutation } from '@tanstack/react-query';
+import { useAuthStore } from '../../store/auth.store';
+import { loginApi } from '../../api/auth.api';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 export const useLogin = () => {
   const setUser = useAuthStore((s) => s.setUser);
@@ -14,17 +14,17 @@ export const useLogin = () => {
     mutationFn: loginApi,
     onSuccess: (res) => {
       setUser(res.user);
-      toast.success("Welcome back!", {
-        description: "You have successfully signed in.",
+      toast.success('Welcome back!', {
+        description: 'You have successfully signed in.',
       });
-      navigate("/products");
+      navigate('/products');
     },
     onError: (error: any) => {
-      console.error("Login failed:", error);
+      console.error('Login failed:', error);
       clearUser?.();
-      toast.error("Sign in failed", {
+      toast.error('Sign in failed', {
         description:
-          error?.response?.data?.message ?? "Invalid email or password.",
+          error?.response?.data?.message ?? 'Invalid email or password.',
       });
     },
   });
