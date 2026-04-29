@@ -1,6 +1,5 @@
 export type IssueStatus   = 'OPEN' | 'IN_PROGRESS' | 'RESOLVED' | 'CLOSED'
 export type IssuePriority = 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL'
-export type IssueSeverity = 'MINOR' | 'MAJOR' | 'CRITICAL'
 
 export interface IssueUser {
   id:    number
@@ -14,7 +13,6 @@ export interface Issue {
   description: string
   status:      IssueStatus
   priority:    IssuePriority
-  severity:    IssueSeverity | null
   createdAt:   string
   updatedAt:   string
   createdBy:   IssueUser
@@ -49,7 +47,6 @@ export interface IssueFilters {
   limit?:        number
   status?:       IssueStatus | ''
   priority?:     IssuePriority | ''
-  severity?:     IssueSeverity | ''
   search?:       string
   sortBy?:       'createdAt' | 'updatedAt' | 'priority' | 'status'
   sortOrder?:    'asc' | 'desc'

@@ -10,7 +10,6 @@ export function useIssueFilters() {
     limit: Number(searchParams.get('limit')) || 10,
     status: (searchParams.get('status') as IssueFilters['status']) || '',
     priority: (searchParams.get('priority') as IssueFilters['priority']) || '',
-    severity: (searchParams.get('severity') as IssueFilters['severity']) || '',
     search: searchParams.get('search') || '',
     sortBy:
       (searchParams.get('sortBy') as IssueFilters['sortBy']) || 'createdAt',
