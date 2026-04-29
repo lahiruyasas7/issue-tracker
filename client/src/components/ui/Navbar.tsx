@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { LogOut, ShoppingBag, User } from 'lucide-react';
+import { LogOut, Plus, User } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -29,20 +29,20 @@ const Navbar = () => {
     <nav className="border-b bg-white">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         {/* Logo */}
-        <Link to="/products" className="flex items-center gap-2">
+        <Link to="/issues" className="flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-black text-white font-bold">
-            MO
+            IT
           </div>
-          <span className="text-lg font-semibold">Marketplace</span>
+          <span className="text-lg font-semibold">Issue Tracker</span>
         </Link>
 
         {/* Actions */}
         <div className="flex items-center gap-3">
-          {/* New Product */}
-          <Link to="/products/create">
+          {/* New Issue */}
+          <Link to="/issues/new">
             <Button size="sm" className="gap-2 cursor-pointer">
-              <ShoppingBag className="h-4 w-4" />
-              New Product
+              <Plus className="h-4 w-4" />
+              New Issue
             </Button>
           </Link>
 
