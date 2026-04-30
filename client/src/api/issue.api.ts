@@ -36,4 +36,16 @@ export const issueService = {
   delete: async (id: number) => {
     await api.delete(`/issues/${id}`);
   },
+
+  addComment: async (
+    issueId: number,
+    body: string,
+  ): Promise<{ success: boolean; data: Comment }> => {
+    const { data } = await api.post(`/issues/comments/${issueId}`, { body });
+    return data;
+  },
+
+  deleteComment: async (commentId: number): Promise<void> => {
+    await api.delete(`/issues/comments/${commentId}`);
+  },
 };
