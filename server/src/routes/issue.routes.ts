@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   createIssueHandler,
   deleteIssueHandler,
+  exportIssuesHandler,
   getIssueByIdHandler,
   getIssuesHandler,
   updateIssueHandler,
@@ -10,6 +11,7 @@ import {
 import { protect } from "../middleware/auth.middleware";
 import {
   createIssueSchema,
+  exportIssuesQuerySchema,
   getIssuesQuerySchema,
   updateIssueSchema,
   updateIssueStatusSchema,
@@ -22,13 +24,18 @@ const router = Router();
 router.use(protect);
 
 router.post("/create", validate(createIssueSchema), createIssueHandler);
+router.get("/", validate(getIssuesQuerySchema, "query"), getIssuesHandler);
+router.get(
+  "/export",
+  validate(exportIssuesQuerySchema, "query"),
+  exportIssuesHandler,
+);
 router.patch("/update/:id", validate(updateIssueSchema), updateIssueHandler);
 router.patch(
   "/update/:id/status",
   validate(updateIssueStatusSchema),
   updateIssueStatusHandler,
 );
-router.get("/", validate(getIssuesQuerySchema, "query"), getIssuesHandler);
 router.get("/:id", getIssueByIdHandler);
 router.delete("/:id", deleteIssueHandler);
 
