@@ -5,7 +5,7 @@ import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.routes";
 import issueRoutes from "./routes/issue.routes";
 import { errorHandler } from "./middleware/error.middleware";
-import path from "path";
+import commentRoutes from "./routes/comment.routes";
 
 dotenv.config({ path: "../.env" });
 
@@ -38,6 +38,7 @@ app.get("/health", (req, res) => {
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/issues", issueRoutes);
+app.use("/api/issues/comments", commentRoutes);
 
 // Error handler
 app.use(errorHandler);
