@@ -10,7 +10,6 @@ import { protect } from "../middleware/auth.middleware";
 
 const router = Router();
 
-console.log("Registering /register route");
 router.post("/register", register);
 router.post("/login", login);
 router.post("/refresh", refresh);
