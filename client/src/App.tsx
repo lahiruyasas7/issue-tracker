@@ -3,6 +3,8 @@ import AuthPage from './pages/AuthPage';
 import IssuesPage from './pages/IssuePage';
 import { useAuthStore } from './store/auth.store';
 import Navbar from './components/ui/Navbar';
+import CreateIssuePage from './pages/CreateIssuePage';
+import EditIssuePage from './pages/EditeIssuePage';
 
 function App() {
   const { isAuthenticated } = useAuthStore();
@@ -14,6 +16,8 @@ function App() {
           {/* Public routes */}
           <Route path="/auth" element={<AuthPage />} />
           <Route path="/issues" element={<IssuesPage />} />
+          <Route path="/issues/new" element={<CreateIssuePage />} />
+          <Route path="/issues/:id/edit" element={<EditIssuePage />} />
         </Routes>
       </BrowserRouter>
     </>
