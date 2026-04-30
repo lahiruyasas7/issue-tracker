@@ -23,6 +23,7 @@ import {
   issueFormSchema,
   type IssueFormValues,
 } from '@/validations-schema/issue.schema';
+import { AssigneeSelect } from './AssigneeSelect';
 // import { useUnsavedChanges } from '@/hooks/custom-hooks/useUnsavedChanges';
 
 interface Props {
@@ -275,6 +276,25 @@ export function IssueForm({ issueId }: Props) {
             />
           </FormField> */}
         </div>
+
+        {/* Assignee */}
+        <FormField
+          label="Assignee"
+          error={errors.assignedToId?.message}
+          hint="Optional — assign this issue to a team member"
+        >
+          <Controller
+            name="assignedToId"
+            control={control}
+            render={({ field }) => (
+              <AssigneeSelect
+                value={field.value}
+                onChange={field.onChange}
+                disabled={isSubmitting}
+              />
+            )}
+          />
+        </FormField>
 
         {/* Form actions */}
         <div className="flex items-center justify-end gap-3 pt-2 border-t border-zinc-100">
