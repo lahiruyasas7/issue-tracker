@@ -24,7 +24,7 @@ export const issueService = {
   },
 
   update: async (id: number, payload: unknown) => {
-    const { data } = await api.patch(`/issues/${id}`, payload);
+    const { data } = await api.patch(`/issues/update/${id}`, payload);
     return data;
   },
 
