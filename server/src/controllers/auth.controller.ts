@@ -47,7 +47,6 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       message: "Login successful",
       user,
     });
-    console.log("adada");
   } catch (err: any) {
     if (err instanceof ZodError) {
       res.status(400).json({

@@ -90,7 +90,7 @@ export function CommentsSection({ issueId, comments }: Props) {
   const queryClient = useQueryClient();
   const bottomRef = useRef<HTMLDivElement>(null);
   const [deleteTarget, setDeleteTarget] = useState<number | null>(null);
-  console.log('comments', comments);
+ 
   // ----------------------------------------------------------------
   // Comment form
   // ----------------------------------------------------------------

@@ -66,7 +66,7 @@ export default function IssueDetailPage() {
   });
 
   const issue = data?.data;
-  console.log('Fetched issue:', issue);
+
   // ----------------------------------------------------------------
   // Status update mutation
   // ----------------------------------------------------------------

@@ -36,7 +36,7 @@ export function AssigneeSelect({ value, onChange, disabled }: Props) {
 
   const users = data?.data ?? [];
   const selectedUser = users.find((u) => u.id === value) ?? null;
-  console.log('users', users);
+ 
   if (isLoading) {
     return <Skeleton className="h-10 w-full rounded-md" />;
   }
