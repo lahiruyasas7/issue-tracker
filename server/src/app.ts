@@ -6,6 +6,7 @@ import authRoutes from "./routes/auth.routes";
 import issueRoutes from "./routes/issue.routes";
 import { errorHandler } from "./middleware/error.middleware";
 import commentRoutes from "./routes/comment.routes";
+import userRoutes from "./routes/user.routes";
 
 dotenv.config({ path: "../.env" });
 
@@ -27,7 +28,6 @@ app.use(
   }),
 );
 
-app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 
@@ -39,6 +39,7 @@ app.get("/health", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/issues", issueRoutes);
 app.use("/api/issues/comments", commentRoutes);
+app.use("/api/users", userRoutes);
 
 // Error handler
 app.use(errorHandler);
