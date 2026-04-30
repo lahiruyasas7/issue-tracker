@@ -13,6 +13,7 @@ import { StatusBadge } from '../ui/Statusbadge';
 import { PriorityBadge } from '../ui/PrioriryBadge';
 import { formatDistanceToNow } from 'date-fns';
 import { Pencil } from 'lucide-react';
+import { useAuthStore } from '@/store/auth.store';
 
 interface Props {
   issues: Issue[];
@@ -20,6 +21,7 @@ interface Props {
 }
 
 export function IssueTable({ issues, isLoading }: Props) {
+  const { user } = useAuthStore();
   const navigate = useNavigate();
 
   if (isLoading) {
@@ -113,14 +115,16 @@ export function IssueTable({ issues, isLoading }: Props) {
                 })}
               </TableCell>
               <TableCell className="w-10">
-                <Link
-                  to={`/issues/${issue.id}/edit`}
-                  onClick={(e) => e.stopPropagation()} // prevent row click nav
-                  className="p-1.5 rounded hover:bg-zinc-100 text-zinc-400
+                {user?.id === issue.createdBy.id && (
+                  <Link
+                    to={`/issues/${issue.id}/edit`}
+                    onClick={(e) => e.stopPropagation()} // prevent row click nav
+                    className="p-1.5 rounded hover:bg-zinc-100 text-zinc-400
                hover:text-black transition-colors inline-flex"
-                >
-                  <Pencil className="w-3.5 h-3.5" />
-                </Link>
+                  >
+                    <Pencil className="w-3.5 h-3.5" />
+                  </Link>
+                )}
               </TableCell>
             </TableRow>
           ))}
