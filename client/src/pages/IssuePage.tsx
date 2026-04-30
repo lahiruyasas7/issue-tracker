@@ -10,6 +10,7 @@ import { StatusCountCards } from '@/components/issues/StatusCountCard';
 import { IssueFiltersBar } from '@/components/issues/IssueFilterBar';
 import { IssueTable } from '@/components/issues/IssuesTable';
 import { Pagination } from '@/components/ui/Pagination';
+import { ExportButton } from '@/components/issues/ExportButton';
 
 export default function IssuesPage() {
   const { filters, setFilters, resetFilters } = useIssueFilters();
@@ -59,6 +60,7 @@ export default function IssuesPage() {
             New issue
           </Button>
         </Link> */}
+        <ExportButton filters={filters} totalCount={data?.pagination.total} />
       </div>
 
       {/* Status count cards — clickable filters */}

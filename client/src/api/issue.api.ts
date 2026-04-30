@@ -48,4 +48,46 @@ export const issueService = {
   deleteComment: async (commentId: number): Promise<void> => {
     await api.delete(`/issues/comments/${commentId}`);
   },
+
+  exportIssues: async (
+    filters: Partial<IssueFilters>,
+    format: 'csv' | 'json',
+  ): Promise<void> => {
+    // strip empty values — same as getAll
+    const params = Object.fromEntries(
+      Object.entries({ ...filters, format }).filter(
+        ([, v]) => v !== '' && v !== undefined && v !== null && v !== false,
+      ),
+    );
+
+    // use fetch directly — axios doesn't handle blob downloads as cleanly
+    const query = new URLSearchParams(
+      params as Record<string, string>,
+    ).toString();
+
+    const response = await fetch(
+      `${import.meta.env.VITE_APP_API_URL}issues/export?${query}`,
+      { credentials: 'include' }, // sends httpOnly cookies
+    );
+
+    if (!response.ok) {
+      throw new Error('Export failed');
+    }
+
+    // extract filename from Content-Disposition header
+    const disposition = response.headers.get('Content-Disposition') ?? '';
+    const filenameMatch = disposition.match(/filename="(.+)"/);
+    const filename = filenameMatch?.[1] ?? `issues-export.${format}`;
+
+    // trigger browser download
+    const blob = await response.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  },
 };
