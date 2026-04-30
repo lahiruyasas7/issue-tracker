@@ -9,6 +9,8 @@ import {
 } from "../validation-schemas/issue.schema";
 import { issueSelect } from "../issue.select";
 import { Prisma } from "../generated/prisma/client";
+import { format as formatCSV } from "@fast-csv/format";
+import { Response } from "express";
 
 export const createIssue = async (
   input: CreateIssueInput,
@@ -289,12 +291,114 @@ export const getIssueById = async (issueId: number) => {
 //delete issue service
 export const deleteIssue = async (
   issueId: number,
-  userId: number
+  userId: number,
 ): Promise<void> => {
   // reuses existing helper — checks existence + ownership in one query
-  await getIssueOwnedByUser(issueId, userId)
+  await getIssueOwnedByUser(issueId, userId);
 
   await prisma.issue.delete({
     where: { id: issueId },
-  })
-}
+  });
+};
+
+// Reuses the same where-clause logic as getIssues
+// but fetches ALL matching records — no pagination
+const buildWhereClause = (query: Partial<GetIssuesQuery>, userId?: number) => {
+  const { status, priority, search, assignedToMe } = query;
+
+  return {
+    ...(status && { status }),
+    ...(priority && { priority }),
+
+    ...(assignedToMe === true && { assignedToId: userId }),
+    ...(search && {
+      title: {
+        contains: search,
+        mode: "insensitive" as const,
+      },
+    }),
+  };
+};
+
+export const exportIssues = async (
+  query: Partial<GetIssuesQuery>,
+  format: "csv" | "json",
+  userId: number,
+  res: Response,
+): Promise<void> => {
+  // resolve assignedToMe filter properly
+  const where = {
+    ...buildWhereClause(query),
+    ...(query.assignedToMe === true ? { assignedToId: userId } : {}),
+  };
+
+  const issues = await prisma.issue.findMany({
+    where,
+    orderBy: { createdAt: "desc" },
+    select: {
+      id: true,
+      title: true,
+      description: true,
+      status: true,
+      priority: true,
+
+      createdAt: true,
+      updatedAt: true,
+      createdBy: {
+        select: { name: true, email: true },
+      },
+      assignedTo: {
+        select: { name: true, email: true },
+      },
+    },
+  });
+
+  // Flatten for export — nested objects don't translate well to CSV
+  const rows = issues.map((issue) => ({
+    id: issue.id,
+    title: issue.title,
+    description: issue.description,
+    status: issue.status,
+    priority: issue.priority,
+    created_by: issue.createdBy.name,
+    created_by_email: issue.createdBy.email,
+    assigned_to: issue.assignedTo?.name ?? "Unassigned",
+    assigned_to_email: issue.assignedTo?.email ?? "",
+    created_at: issue.createdAt.toISOString(),
+    updated_at: issue.updatedAt.toISOString(),
+  }));
+
+  // ----------------------------------------------------------------
+  // JSON export
+  // ----------------------------------------------------------------
+  if (format === "json") {
+    const filename = `issues-export-${Date.now()}.json`;
+    res.setHeader("Content-Type", "application/json");
+    res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
+    res.status(200).json({
+      exported_at: new Date().toISOString(),
+      total: rows.length,
+      filters_applied: {
+        status: query.status ?? null,
+        priority: query.priority ?? null,
+        search: query.search ?? null,
+        assignedToMe: query.assignedToMe ?? false,
+      },
+      issues: rows,
+    });
+    return;
+  }
+
+  // ----------------------------------------------------------------
+  // CSV export — streamed directly to response
+  // ----------------------------------------------------------------
+  const filename = `issues-export-${Date.now()}.csv`;
+  res.setHeader("Content-Type", "text/csv");
+  res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
+
+  const csvStream = formatCSV({ headers: true, writeBOM: true });
+  csvStream.pipe(res);
+
+  rows.forEach((row) => csvStream.write(row));
+  csvStream.end();
+};

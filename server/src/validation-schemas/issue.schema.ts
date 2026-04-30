@@ -14,7 +14,7 @@ export const createIssueSchema = z.object({
 
   priority: z.enum(["LOW", "MEDIUM", "HIGH", "CRITICAL"]).default("MEDIUM"),
 
-  assignedToId: z.coerce.number().int().positive().optional(),
+  assignedToId: z.coerce.number().int().positive().nullable().optional(),
 });
 
 export const updateIssueSchema = z
@@ -109,6 +109,21 @@ export const getIssuesQuerySchema = z.object({
     .optional()
     .transform((val) => val === "true"),
 });
+
+export const exportIssuesQuerySchema = z.object({
+  format: z.enum(["csv", "json"]).default("csv"),
+
+  // reuse same optional filters from getIssuesQuerySchema
+  status: z.enum(["OPEN", "IN_PROGRESS", "RESOLVED", "CLOSED"]).optional(),
+  priority: z.enum(["LOW", "MEDIUM", "HIGH", "CRITICAL"]).optional(),
+  severity: z.enum(["MINOR", "MAJOR", "CRITICAL"]).optional(),
+  search: z.string().trim().max(100).optional(),
+  assignedToMe: z
+    .enum(["true", "false"])
+    .optional()
+    .transform((val) => val === "true"),
+});
+export type ExportIssuesQuery = z.infer<typeof exportIssuesQuerySchema>;
 
 export type GetIssuesQuery = z.infer<typeof getIssuesQuerySchema>;
 

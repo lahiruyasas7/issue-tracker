@@ -17,7 +17,7 @@ export const useLogin = () => {
       toast.success('Welcome back!', {
         description: 'You have successfully signed in.',
       });
-      navigate('/products');
+      navigate('/issues');
     },
     onError: (error: any) => {
       console.error('Login failed:', error);

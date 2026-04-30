@@ -17,7 +17,7 @@ export const useRegister = () => {
       toast.success('Account created!', {
         description: 'Welcome! Your account is ready.',
       });
-      navigate('/products');
+      navigate('/issues');
     },
     onError: (error: any) => {
       // Handle error: show toast, log, etc.

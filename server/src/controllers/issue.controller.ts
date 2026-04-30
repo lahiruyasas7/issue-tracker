@@ -3,12 +3,17 @@ import { AuthRequest } from "../middleware/auth.middleware";
 import {
   createIssue,
   deleteIssue,
+  exportIssues,
   getIssueById,
   getIssues,
   updateIssue,
   updateIssueStatus,
 } from "../Services/issue.service";
-import { GetIssuesQuery } from "../validation-schemas/issue.schema";
+import {
+  ExportIssuesQuery,
+  exportIssuesQuerySchema,
+  GetIssuesQuery,
+} from "../validation-schemas/issue.schema";
 
 export const createIssueHandler = async (
   req: AuthRequest,
@@ -203,5 +208,26 @@ export const deleteIssueHandler = async (
     res.status(204).send();
   } catch (err: any) {
     handleIssueError(err, res);
+  }
+};
+
+export const exportIssuesHandler = async (
+  req: AuthRequest,
+  res: Response,
+): Promise<void> => {
+  try {
+    const query = req.query as unknown as ExportIssuesQuery;
+
+    const format = (query.format ?? "csv") as "csv" | "json";
+
+    await exportIssues(query, format, req.user!.userId, res);
+  } catch (err: any) {
+    // only send error headers if response hasn't started streaming yet
+    if (!res.headersSent) {
+      res.status(500).json({
+        success: false,
+        message: "Export failed",
+      });
+    }
   }
 };
