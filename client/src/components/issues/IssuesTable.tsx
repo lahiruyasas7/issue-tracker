@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Table,
   TableBody,
@@ -6,20 +6,21 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
-import { Skeleton } from '@/components/ui/skeleton'
-import type { Issue } from '@/types/issue.types'
-import { StatusBadge } from '../ui/Statusbadge'
-import { PriorityBadge } from '../ui/PrioriryBadge'
-import { formatDistanceToNow } from 'date-fns'
+} from '@/components/ui/table';
+import { Skeleton } from '@/components/ui/skeleton';
+import type { Issue } from '@/types/issue.types';
+import { StatusBadge } from '../ui/Statusbadge';
+import { PriorityBadge } from '../ui/PrioriryBadge';
+import { formatDistanceToNow } from 'date-fns';
+import { Pencil } from 'lucide-react';
 
 interface Props {
-  issues:    Issue[]
-  isLoading: boolean
+  issues: Issue[];
+  isLoading: boolean;
 }
 
 export function IssueTable({ issues, isLoading }: Props) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   if (isLoading) {
     return (
@@ -28,7 +29,7 @@ export function IssueTable({ issues, isLoading }: Props) {
           <Skeleton key={i} className="h-14 w-full rounded-lg" />
         ))}
       </div>
-    )
+    );
   }
 
   if (issues.length === 0) {
@@ -39,7 +40,7 @@ export function IssueTable({ issues, isLoading }: Props) {
           Try adjusting your filters or create a new issue
         </p>
       </div>
-    )
+    );
   }
 
   return (
@@ -47,11 +48,17 @@ export function IssueTable({ issues, isLoading }: Props) {
       <Table>
         <TableHeader>
           <TableRow className="bg-zinc-50 hover:bg-zinc-50">
-            <TableHead className="font-semibold text-black w-[40%]">Issue</TableHead>
+            <TableHead className="font-semibold text-black w-[40%]">
+              Issue
+            </TableHead>
             <TableHead className="font-semibold text-black">Status</TableHead>
             <TableHead className="font-semibold text-black">Priority</TableHead>
-            <TableHead className="font-semibold text-black hidden md:table-cell">Assignee</TableHead>
-            <TableHead className="font-semibold text-black hidden lg:table-cell">Created</TableHead>
+            <TableHead className="font-semibold text-black hidden md:table-cell">
+              Assignee
+            </TableHead>
+            <TableHead className="font-semibold text-black hidden lg:table-cell">
+              Created
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -105,10 +112,20 @@ export function IssueTable({ issues, isLoading }: Props) {
                   addSuffix: true,
                 })}
               </TableCell>
+              <TableCell className="w-10">
+                <Link
+                  to={`/issues/${issue.id}/edit`}
+                  onClick={(e) => e.stopPropagation()} // prevent row click nav
+                  className="p-1.5 rounded hover:bg-zinc-100 text-zinc-400
+               hover:text-black transition-colors inline-flex"
+                >
+                  <Pencil className="w-3.5 h-3.5" />
+                </Link>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
     </div>
-  )
+  );
 }
