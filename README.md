@@ -4,7 +4,7 @@ A full-stack issue tracking application with complete CRUD operations, JWT authe
 
 ## Live Demo
 
-## url:
+## url: https://issue-tracker-gamma-weld-87.vercel.app/
 
 ## Tech Stack
 
