@@ -53,12 +53,12 @@ export default function IssuesPage() {
             Track, manage and resolve your team's issues
           </p>
         </div>
-        <Link to="/issues/new">
+        {/* <Link to="/issues/new">
           <Button className="bg-black text-white hover:bg-zinc-800 gap-2">
             <Plus className="w-4 h-4" />
             New issue
           </Button>
-        </Link>
+        </Link> */}
       </div>
 
       {/* Status count cards — clickable filters */}
