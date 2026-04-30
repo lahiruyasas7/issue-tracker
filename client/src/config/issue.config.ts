@@ -47,3 +47,20 @@ export const PRIORITY_CONFIG: Record<
     dotClass: 'bg-zinc-400',
   },
 };
+
+export const ALLOWED_TRANSITIONS: Record<IssueStatus, IssueStatus[]> = {
+  OPEN: ['IN_PROGRESS'],
+  IN_PROGRESS: ['OPEN', 'RESOLVED'],
+  RESOLVED: ['CLOSED', 'IN_PROGRESS'],
+  CLOSED: [],
+};
+
+// statuses that require confirmation dialog
+export const CONFIRMATION_REQUIRED: IssueStatus[] = ['RESOLVED', 'CLOSED'];
+
+export const STATUS_TRANSITION_LABELS: Record<IssueStatus, string> = {
+  OPEN: 'Reopen issue',
+  IN_PROGRESS: 'Start progress',
+  RESOLVED: 'Mark as resolved',
+  CLOSED: 'Close issue',
+};
