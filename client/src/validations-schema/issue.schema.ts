@@ -12,9 +12,22 @@ export const issueFormSchema = z.object({
     .min(10, 'Description must be at least 10 characters')
     .trim(),
 
-  priority: z.enum(['LOW', 'MEDIUM', 'HIGH', 'CRITICAL']).default('MEDIUM').optional(),
+  priority: z
+    .enum(['LOW', 'MEDIUM', 'HIGH', 'CRITICAL'])
+    .default('MEDIUM')
+    .optional(),
 
   assignedToId: z.number().int().positive().optional().nullable(),
 });
 
 export type IssueFormValues = z.input<typeof issueFormSchema>;
+
+export const commentSchema = z.object({
+  body: z
+    .string({ message: 'Comment cannot be empty' })
+    .min(1, 'Comment cannot be empty')
+    .max(2000, 'Comment must not exceed 2000 characters')
+    .trim(),
+});
+
+export type CommentFormValues = z.infer<typeof commentSchema>;
