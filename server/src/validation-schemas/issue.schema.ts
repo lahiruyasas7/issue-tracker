@@ -14,7 +14,7 @@ export const createIssueSchema = z.object({
 
   priority: z.enum(["LOW", "MEDIUM", "HIGH", "CRITICAL"]).default("MEDIUM"),
 
-  assignedToId: z.coerce.number().int().positive().optional(),
+  assignedToId: z.coerce.number().int().positive().nullable().optional(),
 });
 
 export const updateIssueSchema = z
