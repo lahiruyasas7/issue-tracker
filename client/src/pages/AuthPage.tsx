@@ -59,7 +59,7 @@ export default function AuthPage() {
           {/* Logo */}
           <div className="flex items-center gap-2 p-4 rounded-lg justify-center mb-3">
             <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-black text-white font-bold">
-              IO
+              IT
             </div>
             <span className="text-lg font-semibold">Issue Tracker</span>
           </div>
