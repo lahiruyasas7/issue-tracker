@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Plus, AlertCircle } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
 import { useIssueFilters } from '@/hooks/custom-hooks/useIssueFilter';
 import { useDebounce } from '@/hooks/custom-hooks/useDebounce';
 import { issueService } from '@/api/issue.api';
