@@ -45,7 +45,7 @@ export function StatusCountCards({
             key={key}
             onClick={() => onFilter(isActive ? '' : key)}
             className={cn(
-              'text-left p-4 rounded-lg border border-l-4 transition-all',
+              'text-left p-4 rounded-lg border border-l-4 transition-all cursor-pointer',
               color,
               isActive
                 ? 'bg-black text-white border-black'

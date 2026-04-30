@@ -79,7 +79,7 @@ export function IssueForm({ issueId }: Props) {
   // ----------------------------------------------------------------
   // Unsaved changes guard
   // ----------------------------------------------------------------
-//   const blocker = useUnsavedChanges(isDirty && !isSubmitting);
+  //   const blocker = useUnsavedChanges(isDirty && !isSubmitting);
 
   // ----------------------------------------------------------------
   // Create mutation
@@ -285,14 +285,14 @@ export function IssueForm({ issueId }: Props) {
               navigate(isEditMode ? `/issues/${issueId}` : '/issues')
             }
             disabled={isSubmitting}
-            className="border-zinc-200 hover:bg-zinc-50"
+            className="border-zinc-200 hover:bg-zinc-50 cursor-pointer"
           >
             Cancel
           </Button>
           <Button
             type="submit"
             disabled={isSubmitting || (!isDirty && isEditMode)}
-            className="bg-black text-white hover:bg-zinc-800 min-w-[120px]"
+            className="bg-black text-white hover:bg-zinc-800 min-w-[120px] cursor-pointer"
           >
             {isSubmitting ? (
               <span className="flex items-center gap-2">

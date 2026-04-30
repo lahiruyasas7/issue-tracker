@@ -57,7 +57,7 @@ export function IssueFiltersBar({
           })
         }
       >
-        <SelectTrigger className="w-[140px] border-zinc-200 focus:ring-black">
+        <SelectTrigger className="w-[140px] border-zinc-200 focus:ring-black cursor-pointer">
           <SelectValue placeholder="Priority" />
         </SelectTrigger>
         <SelectContent>
@@ -80,7 +80,7 @@ export function IssueFiltersBar({
           });
         }}
       >
-        <SelectTrigger className="w-[160px] border-zinc-200 focus:ring-black">
+        <SelectTrigger className="w-[160px] border-zinc-200 focus:ring-black cursor-pointer">
           <SlidersHorizontal className="w-3.5 h-3.5 mr-1.5 text-zinc-400" />
           <SelectValue placeholder="Sort by" />
         </SelectTrigger>
@@ -100,8 +100,8 @@ export function IssueFiltersBar({
         onClick={() => onFilter({ assignedToMe: !filters.assignedToMe })}
         className={
           filters.assignedToMe
-            ? 'bg-black text-white hover:bg-zinc-800'
-            : 'border-zinc-200 hover:bg-zinc-50'
+            ? 'bg-black text-white hover:bg-zinc-800 cursor-pointer'
+            : 'border-zinc-200 hover:bg-zinc-50 cursor-pointer'
         }
       >
         Assigned to me
@@ -113,7 +113,7 @@ export function IssueFiltersBar({
           variant="ghost"
           size="sm"
           onClick={onReset}
-          className="text-zinc-500 hover:text-black gap-1.5"
+          className="text-zinc-500 hover:text-black gap-1.5 cursor-pointer"
         >
           <X className="w-3.5 h-3.5" />
           Clear filters
