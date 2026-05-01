@@ -1,6 +1,7 @@
 import { Response } from "express";
 import { AuthRequest } from "../middleware/auth.middleware";
 import { createComment, deleteComment } from "../Services/comment.service";
+import { CreateCommentInput } from "../validation-schemas/comment.schema";
 
 // ----------------------------------------------------------------
 // centralized error handler for comment routes
@@ -31,7 +32,7 @@ const handleCommentError = (err: any, res: Response): void => {
 // POST /api/issues/:issueId/comments
 // ----------------------------------------------------------------
 export const createCommentHandler = async (
-  req: AuthRequest,
+  req: AuthRequest<{ issueId: string }, any, CreateCommentInput>, // params + body typed
   res: Response,
 ): Promise<void> => {
   try {
