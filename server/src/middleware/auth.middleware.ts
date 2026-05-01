@@ -2,7 +2,13 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { JwtPayload } from "../types/auth.type";
 
-export interface AuthRequest extends Request {
+// Extend Express Request properly
+export interface AuthRequest<
+  P = Record<string, string>, // route params
+  ResBody = any, // response body
+  ReqBody = any, // request body
+  ReqQuery = any, // query string
+> extends Request<P, ResBody, ReqBody, ReqQuery> {
   user?: JwtPayload;
 }
 
