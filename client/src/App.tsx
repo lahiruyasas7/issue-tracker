@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 // import AuthPage from './pages/AuthPage';
 // import IssuesPage from './pages/IssuePage';
 import { useAuthStore } from './store/auth.store';
@@ -33,6 +33,8 @@ function App() {
               <Route path="/issues/:id/edit" element={<EditIssuePage />} />
               <Route path="/issues/:id" element={<IssueDetailPage />} />
             </Route>
+            {/* Default redirect */}
+            <Route path="*" element={<Navigate to="/issues" replace />} />
           </Routes>
         </Suspense>
       </BrowserRouter>
