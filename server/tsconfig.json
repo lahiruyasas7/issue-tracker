@@ -11,9 +11,8 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "strict": false,
-
     // Ensure Node types are available
-    "types": ["node"]
+    "types": ["node", "express"]
   },
   "include": ["src/**/*", "cookie-parser"],
   "exclude": [
