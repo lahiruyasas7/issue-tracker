@@ -32,7 +32,7 @@ const handleCommentError = (err: any, res: Response): void => {
 // POST /api/issues/:issueId/comments
 // ----------------------------------------------------------------
 export const createCommentHandler = async (
-  req: AuthRequest<{ issueId: string }, any, CreateCommentInput>, // params + body typed
+  req: AuthRequest,
   res: Response,
 ): Promise<void> => {
   try {
