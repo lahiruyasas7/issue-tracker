@@ -224,7 +224,11 @@ export function IssueForm({ issueId }: Props) {
               name="priority"
               control={control}
               render={({ field }) => (
-                <Select value={field.value} onValueChange={field.onChange}>
+                <Select
+                  key={field.value}
+                  value={field.value}
+                  onValueChange={field.onChange}
+                >
                   <SelectTrigger className="border-zinc-200 focus:ring-black">
                     <SelectValue placeholder="Select priority" />
                   </SelectTrigger>
