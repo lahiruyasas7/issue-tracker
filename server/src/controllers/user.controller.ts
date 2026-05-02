@@ -1,12 +1,12 @@
-import { Response } from "express";
-import { AuthRequest } from "../middleware/auth.middleware";
+import { Response, Request } from "express";
+// import { Request } from "../middleware/auth.middleware";
 import { prisma } from "../client";
 
 // GET /api/users
 // Returns all users for assignee dropdown
 
 export const getUsersHandler = async (
-  req: AuthRequest,
+  req: Request,
   res: Response,
 ): Promise<void> => {
   try {

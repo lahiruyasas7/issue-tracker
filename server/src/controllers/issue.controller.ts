@@ -1,5 +1,5 @@
-import { Response } from "express";
-import { AuthRequest } from "../middleware/auth.middleware";
+import { Response, Request } from "express";
+// import { Request } from "../middleware/auth.middleware";
 import {
   createIssue,
   deleteIssue,
@@ -16,7 +16,7 @@ import {
 } from "../validation-schemas/issue.schema";
 
 export const createIssueHandler = async (
-  req: AuthRequest,
+  req: Request,
   res: Response,
 ): Promise<void> => {
   try {
@@ -37,7 +37,7 @@ export const createIssueHandler = async (
 };
 
 export const updateIssueHandler = async (
-  req: AuthRequest,
+  req: Request,
   res: Response,
 ): Promise<void> => {
   try {
@@ -67,7 +67,7 @@ export const updateIssueHandler = async (
 };
 
 export const updateIssueStatusHandler = async (
-  req: AuthRequest,
+  req: Request,
   res: Response,
 ): Promise<void> => {
   try {
@@ -138,7 +138,7 @@ const handleIssueError = (err: any, res: Response): void => {
 };
 
 export const getIssuesHandler = async (
-  req: AuthRequest,
+  req: Request,
   res: Response,
 ): Promise<void> => {
   try {
@@ -157,7 +157,7 @@ export const getIssuesHandler = async (
 };
 
 export const getIssueByIdHandler = async (
-  req: AuthRequest,
+  req: Request,
   res: Response,
 ): Promise<void> => {
   try {
@@ -186,7 +186,7 @@ export const getIssueByIdHandler = async (
 };
 
 export const deleteIssueHandler = async (
-  req: AuthRequest,
+  req: Request,
   res: Response,
 ): Promise<void> => {
   try {
@@ -212,7 +212,7 @@ export const deleteIssueHandler = async (
 };
 
 export const exportIssuesHandler = async (
-  req: AuthRequest,
+  req: Request,
   res: Response,
 ): Promise<void> => {
   try {

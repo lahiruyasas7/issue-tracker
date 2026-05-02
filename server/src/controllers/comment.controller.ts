@@ -1,5 +1,5 @@
-import { Response } from "express";
-import { AuthRequest } from "../middleware/auth.middleware";
+import { Response, Request } from "express";
+// import { AuthRequest } from "../middleware/auth.middleware";
 import { createComment, deleteComment } from "../Services/comment.service";
 import { CreateCommentInput } from "../validation-schemas/comment.schema";
 
@@ -32,7 +32,7 @@ const handleCommentError = (err: any, res: Response): void => {
 // POST /api/issues/:issueId/comments
 // ----------------------------------------------------------------
 export const createCommentHandler = async (
-  req: AuthRequest,
+  req: Request,
   res: Response,
 ): Promise<void> => {
   try {
@@ -65,7 +65,7 @@ export const createCommentHandler = async (
 // DELETE /api/comments/:commentId
 // ----------------------------------------------------------------
 export const deleteCommentHandler = async (
-  req: AuthRequest,
+  req: Request,
   res: Response,
 ): Promise<void> => {
   try {
