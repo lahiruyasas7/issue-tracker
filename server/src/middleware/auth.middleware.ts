@@ -2,12 +2,16 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { JwtPayload } from "../types/auth.type";
 
-export interface AuthRequest extends Request {
-  user?: JwtPayload;
+declare global {
+  namespace Express {
+    interface Request {
+      user?: JwtPayload;
+    }
+  }
 }
 
 export const protect = (
-  req: AuthRequest,
+  req: Request,
   res: Response,
   next: NextFunction,
 ): void => {
