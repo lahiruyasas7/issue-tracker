@@ -83,13 +83,13 @@ export default function AuthPage() {
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                   <Input
-                    {...register('full_name')}
+                    {...register('name')}
                     placeholder="John Doe"
                     className="pl-10"
                   />
                 </div>
                 <p className="text-red-500 text-sm mt-1">
-                  {(errors as any)?.full_name?.message}
+                  {(errors as any)?.name?.message}
                 </p>
               </div>
             )}
