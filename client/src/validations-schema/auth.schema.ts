@@ -16,7 +16,7 @@ export const loginSchema = z.object({
 
 export const signupSchema = z
   .object({
-    full_name: z.string().min(1),
+    name: z.string().min(1),
     email: z.string().email(),
     password: passwordSchema,
     confirmPassword: z.string(),
