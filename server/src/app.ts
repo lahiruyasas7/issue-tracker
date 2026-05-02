@@ -5,7 +5,7 @@ import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.routes";
 import issueRoutes from "./routes/issue.routes";
 import { errorHandler } from "./middleware/error.middleware";
-// import commentRoutes from "./routes/comment.routes";
+import commentRoutes from "./routes/comment.routes";
 import userRoutes from "./routes/user.routes";
 
 dotenv.config();
@@ -44,7 +44,7 @@ app.get("/health", (req, res) => {
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/issues", issueRoutes);
-// app.use("/api/issues/comments", commentRoutes);
+app.use("/api/issues/comments", commentRoutes);
 app.use("/api/users", userRoutes);
 
 // Error handler
