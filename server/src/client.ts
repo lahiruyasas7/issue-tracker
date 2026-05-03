@@ -19,6 +19,9 @@ const adapter = new PrismaMariaDb({
   connectTimeout: 10000, // CRITICAL: Increase from default 1s to 10s
   acquireTimeout: 10000, // Increase pool acquisition timeout
   idleTimeout: 300, // Match v6 default (300s)
+    ssl: {
+    rejectUnauthorized: false  // Accept self-signed cert
+  }
 });
 const prisma = new PrismaClient({ adapter });
 
