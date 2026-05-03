@@ -11,6 +11,7 @@ url: https://issue-tracker-gamma-weld-87.vercel.app/
 1. Frontend: Vercel
 2. Backend: Render
 3. Database: Railway (MySQL)
+> **Note:** The backend is hosted on Render’s free tier, which may enter a sleep state after inactivity. As a result, the initial API request can experience a delay of up to ~50 seconds while the server restarts.
 
 ## Tech Stack
 
