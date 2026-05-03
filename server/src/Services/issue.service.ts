@@ -115,6 +115,31 @@ export const updateIssue = async (
 };
 
 // ----------------------------------------------------------------
+// used by: updateIssueStatus only
+// creator OR assignee is allowed
+// ----------------------------------------------------------------
+const getIssueForStatusUpdate = async (issueId: number, userId: number) => {
+  const issue = await prisma.issue.findUnique({
+    where: { id: issueId },
+    select: {
+      id: true,
+      status: true,
+      createdById: true,
+      assignedToId: true,
+    },
+  });
+
+  if (!issue) throw new Error("ISSUE_NOT_FOUND");
+
+  const isCreator = issue.createdById === userId;
+  const isAssignee = issue.assignedToId === userId;
+
+  if (!isCreator && !isAssignee) throw new Error("FORBIDDEN");
+
+  return issue;
+};
+
+// ----------------------------------------------------------------
 // update issue status only — separate endpoint, separate logic
 // ----------------------------------------------------------------
 export const updateIssueStatus = async (
@@ -122,7 +147,7 @@ export const updateIssueStatus = async (
   input: UpdateIssueStatusInput,
   userId: number,
 ) => {
-  const issue = await getIssueOwnedByUser(issueId, userId);
+  const issue = await getIssueForStatusUpdate(issueId, userId);
 
   const currentStatus = issue.status as Status;
   const newStatus = input.status as Status;

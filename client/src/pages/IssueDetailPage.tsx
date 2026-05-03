@@ -105,11 +105,18 @@ export default function IssueDetailPage() {
   // ----------------------------------------------------------------
   // Derived state
   // ----------------------------------------------------------------
-  const isOwner = !!(
+  const isCreator = !!(
     currentUser &&
     issue &&
     currentUser.id === issue.createdBy.id
   );
+  const isAssignee = !!(
+    currentUser &&
+    issue &&
+    currentUser.id === issue.assignedTo?.id
+  );
+  const canEditOrDelete = isCreator;
+  const canChangeStatus = isCreator || isAssignee;
 
   const availableTransitions = issue ? ALLOWED_TRANSITIONS[issue.status] : [];
 
@@ -198,7 +205,7 @@ export default function IssueDetailPage() {
                 </h1>
 
                 {/* Owner actions */}
-                {isOwner && (
+                {canEditOrDelete && (
                   <div className="flex items-center gap-2 shrink-0">
                     <Link to={`/issues/${issueId}/edit`}>
                       <Button
@@ -243,7 +250,7 @@ export default function IssueDetailPage() {
               </div>
 
               {/* Status transition — only for owner, only if transitions exist */}
-              {isOwner && availableTransitions.length > 0 && (
+              {canChangeStatus && availableTransitions.length > 0 && (
                 <div className="flex items-center gap-2 pt-1">
                   <span className="text-xs text-zinc-400">Move to:</span>
                   <DropdownMenu>

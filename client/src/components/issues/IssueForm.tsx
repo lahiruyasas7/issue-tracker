@@ -53,7 +53,7 @@ export function IssueForm({ issueId }: Props) {
     handleSubmit,
     watch,
     reset,
-    formState: { errors, isDirty, isSubmitting },
+    formState: { errors, isDirty },
   } = useForm<IssueFormValues>({
     resolver: zodResolver(issueFormSchema),
     defaultValues: {
@@ -118,7 +118,7 @@ export function IssueForm({ issueId }: Props) {
 
   const mutation = isEditMode ? updateMutation : createMutation;
   const serverError = mutation.error as any;
-
+  const isLoading = mutation.isPending;
   // ----------------------------------------------------------------
   // Submit
   // ----------------------------------------------------------------
@@ -294,7 +294,7 @@ export function IssueForm({ issueId }: Props) {
               <AssigneeSelect
                 value={field.value}
                 onChange={field.onChange}
-                disabled={isSubmitting}
+                disabled={isLoading}
               />
             )}
           />
@@ -308,17 +308,17 @@ export function IssueForm({ issueId }: Props) {
             onClick={() =>
               navigate(isEditMode ? `/issues/${issueId}` : '/issues')
             }
-            disabled={isSubmitting}
+            disabled={isLoading}
             className="border-zinc-200 hover:bg-zinc-50 cursor-pointer"
           >
             Cancel
           </Button>
           <Button
             type="submit"
-            disabled={isSubmitting || (!isDirty && isEditMode)}
+            disabled={isLoading || (!isDirty && isEditMode)}
             className="bg-black text-white hover:bg-zinc-800 min-w-[120px] cursor-pointer"
           >
-            {isSubmitting ? (
+            {isLoading ? (
               <span className="flex items-center gap-2">
                 <Loader2 className="w-4 h-4 animate-spin" />
                 {isEditMode ? 'Saving...' : 'Creating...'}
