@@ -23,14 +23,14 @@ export const setTokenCookies = (res: Response, payload: JwtPayload): void => {
   res.cookie("access_token", accessToken, {
     httpOnly: true,
     secure: isProd, // true in production (HTTPS only)
-    sameSite: "lax",
+    sameSite: isProd ? "none" : "lax", // none required for cross-origin in prod
     maxAge: 15 * 60 * 1000, // 15 minutes in ms
   });
 
   res.cookie("refresh_token", refreshToken, {
     httpOnly: true,
     secure: isProd,
-    sameSite: "lax",
+    sameSite: isProd ? "none" : "lax", // Allow cross-site in production for refresh endpoint
     path: "/api/auth/refresh", // refresh token only sent to this endpoint
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in ms
   });
