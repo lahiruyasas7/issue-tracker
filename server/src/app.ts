@@ -10,12 +10,6 @@ import userRoutes from "./routes/user.routes";
 
 dotenv.config();
 
-// temporary debug - remove after fixing
-console.log("DATABASE_HOST:", process.env.DATABASE_HOST);
-console.log("DATABASE_PORT:", process.env.DATABASE_PORT);
-console.log("DATABASE_NAME:", process.env.DATABASE_NAME);
-console.log("DATABASE_USER:", process.env.DATABASE_USER);
-
 const app = express();
 const PORT = process.env.PORT || 5000;
 

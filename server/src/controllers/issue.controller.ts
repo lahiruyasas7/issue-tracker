@@ -1,5 +1,4 @@
 import { Response, Request } from "express";
-// import { Request } from "../middleware/auth.middleware";
 import {
   createIssue,
   deleteIssue,

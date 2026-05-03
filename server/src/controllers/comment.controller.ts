@@ -1,7 +1,5 @@
 import { Response, Request } from "express";
-// import { AuthRequest } from "../middleware/auth.middleware";
 import { createComment, deleteComment } from "../Services/comment.service";
-import { CreateCommentInput } from "../validation-schemas/comment.schema";
 
 // ----------------------------------------------------------------
 // centralized error handler for comment routes
