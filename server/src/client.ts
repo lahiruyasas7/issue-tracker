@@ -22,4 +22,28 @@ const adapter = new PrismaMariaDb({
 });
 const prisma = new PrismaClient({ adapter });
 
+// Test connection immediately on startup
+async function testConnection() {
+  const start = Date.now();
+  try {
+    await prisma.$connect();
+    console.log(`Database connected successfully in ${Date.now() - start}ms`);
+
+    // Run a simple query to verify
+    const result = await prisma.$queryRaw`SELECT 1 as test`;
+    console.log("Query test result:", result);
+  } catch (error) {
+    console.error(`Database connection failed after ${Date.now() - start}ms`);
+    console.error("Error type:", error.constructor.name);
+    console.error("Error message:", error.message);
+    if (error.cause) {
+      console.error("Error cause:", error.cause);
+    }
+    // Don't throw here — let the app start so you can see logs
+    // But mark that DB is down
+  }
+}
+
+testConnection();
+
 export { prisma };
